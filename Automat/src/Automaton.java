@@ -68,6 +68,7 @@ public class Automaton {
 		for (State state : states) {
 
 		}
+		return false;
 	}
 
 }
