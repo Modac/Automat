@@ -1,4 +1,5 @@
 package Automaton;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,10 @@ public class Alphabet {
 		if (!range.withinBounds(alphabetItems.size() - 1))
 			throw new InvalidParameterException("endIndex of range exceeds alphabetItems");
 		subRanges.put(label, range);
+	}
+
+	public boolean containsSubRange(String label) {
+		return subRanges.containsKey(label);
 	}
 
 	public Range getSubRange(String label) {

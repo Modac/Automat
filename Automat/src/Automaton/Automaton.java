@@ -21,6 +21,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import Automaton.Alphabet.Range;
+
 public class Automaton {
 
 	private Alphabet alphabet;
@@ -130,6 +132,10 @@ public class Automaton {
 				throw new RuntimeException("Only DEAs supported yet.");
 
 			// TODO: alphabet
+			Alphabet alph = new Alphabet(Alphabet.getArabicNumerals());
+			alph.addAlphabetItems(Alphabet.getUpperLatinAlphabet());
+			alph.addSubRange("0-9", new Range(alph.indexOf('0'), alph.indexOf('9')));
+			alph.addSubRange("A-Z", new Range(alph.indexOf('A'), alph.indexOf('Z')));
 
 			NodeList nList = automaton.getElementsByTagName("STATE");
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -154,10 +160,17 @@ public class Automaton {
 								if (nL.getNodeType() == Element.ELEMENT_NODE) {
 									Element eL = (Element) nL;
 
-									cS.add(eL.getAttribute("read").charAt(0));
+									String label = eL.getAttribute("read");
+									// System.out.println(label);
+									if (alph.containsSubRange(label)) {
+										cS.addAll(alph.getSubAlphabet(label));
+										// System.out.println("SubRec");
+									} else {
+										cS.add(label.charAt(0));
+									}
 								}
 							}
-
+							// System.out.println(cS);
 							s.addTransition(nextState, cS);
 						}
 					}
@@ -202,11 +215,11 @@ public class Automaton {
 		 * System.out.println(a.processWord("abababab"));
 		 */
 
-		Automaton a = Automaton.parseFromXml(new File("C:\\Users\\Laptop\\Documents\\testDEA.xml"));
+		Automaton a = Automaton.parseFromXml(new File("C:\\Users\\Laptop\\Documents\\testDEA2.xml"));
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
-		System.out.println(a.processWord("ABABA"));
+		System.out.println(a.processWord("H3"));
 	}
 
 }
