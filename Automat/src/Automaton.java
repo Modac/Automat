@@ -1,5 +1,6 @@
 import java.security.InvalidParameterException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -61,14 +62,34 @@ public class Automaton {
 
 	public boolean processWord(String word) {
 		if (startStateLabel == "")
-			throw new Exception("startState must be set");
+			throw new RuntimeException("startState must be set");
 
 		char[] c = word.toCharArray();
 		curStateLabel = startStateLabel;
-		for (State state : states) {
-
+		for (char d : c) {
+			State curState = findState(curStateLabel);
+			String nextState = curState.getNextStateFor(d);
+			if (nextState == null)
+				return false; // throw new RuntimeException("the dea isn't
+								// complete"); Just assuming it should end in a
+								// Trap
+			curStateLabel = nextState;
+			for (StateChangeListener list : listeners) {
+				list.onStateChange(curState.getLabel(), d, curStateLabel);
+			}
 		}
+		if (endStateLabels.contains(curStateLabel))
+			return true;
 		return false;
+	}
+
+	private State findState(String label) {
+		for (Iterator<State> iterator = states.iterator(); iterator.hasNext();) {
+			State next = iterator.next();
+			if (next.getLabel().equals(label))
+				return next;
+		}
+		return null;
 	}
 
 }
