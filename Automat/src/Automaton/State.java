@@ -1,3 +1,4 @@
+package Automaton;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;

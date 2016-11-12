@@ -1,3 +1,4 @@
+package Automaton;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,12 @@ public class Alphabet {
 	public void addAlphabetItem(char alphabetItem) {
 		if (!containsAlphabetItem(alphabetItem))
 			alphabetItems.add(alphabetItem);
+	}
+
+	public void addAlphabetItems(List<Character> alphabetItems) {
+		for (Character character : alphabetItems) {
+			addAlphabetItem(character);
+		}
 	}
 
 	public boolean containsAlphabetItem(char alphabetItem) {
@@ -68,14 +75,26 @@ public class Alphabet {
 	}
 
 	public static List<Character> getLowerLatinAlphabet() {
+		return charListOfString("abcdefghijklmnopqrstuvwxyz");
+	}
+
+	public static List<Character> getUpperLatinAlphabet() {
+		return charListOfString("abcdefghijklmnopqrstuvwxyz".toUpperCase());
+	}
+
+	public static List<Character> getArabicNumerals() {
+		return charListOfString("0123456789");
+	}
+
+	private static List<Character> charListOfString(String string) {
 		List<Character> res = new ArrayList<>();
-		for (Character charT : "abcdefghijklmnopqrstuvwxyz".toCharArray()) {
+		for (Character charT : string.toCharArray()) {
 			res.add(charT);
 		}
 		return res;
 	}
 
-	private static class Range {
+	public static class Range {
 		private int startIndex;
 		private int endIndex;
 
