@@ -1,4 +1,4 @@
-package Automaton;
+package automaton;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,8 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import Automaton.Alphabet.Range;
 
 public class Automaton {
 
@@ -91,7 +89,7 @@ public class Automaton {
 		curStateLabel = startStateLabel;
 		for (char d : c) {
 			State curState = findState(curStateLabel);
-			String nextState = curState.getNextStateFor(d);
+			String nextState = curState.getNextStateFor(new AlphabetItem(d));
 			if (nextState == null)
 				return false; // throw new RuntimeException("the dea isn't
 								// complete"); Just assuming it should end in a
@@ -132,10 +130,10 @@ public class Automaton {
 				throw new RuntimeException("Only DEAs supported yet.");
 
 			// TODO: alphabet
-			Alphabet alph = new Alphabet(Alphabet.getArabicNumerals());
-			alph.addAlphabetItems(Alphabet.getUpperLatinAlphabet());
-			alph.addSubRange("0-9", new Range(alph.indexOf('0'), alph.indexOf('9')));
-			alph.addSubRange("A-Z", new Range(alph.indexOf('A'), alph.indexOf('Z')));
+			Alphabet alph = new Alphabet(Alphabet.getArabicNumeralsA());
+			alph.addStringItems(Alphabet.getUpperLatinAlphabet());
+			alph.addSubRange("0-9", new Range(alph.indexOf("0"), alph.indexOf("9")));
+			alph.addSubRange("A-Z", new Range(alph.indexOf("A"), alph.indexOf("Z")));
 
 			NodeList nList = automaton.getElementsByTagName("STATE");
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -152,7 +150,7 @@ public class Automaton {
 							Element eT = (Element) nT;
 
 							String nextState = eT.getAttribute("target");
-							List<Character> cS = new ArrayList<>();
+							List<AlphabetItem> cS = new ArrayList<>();
 
 							NodeList nListL = eT.getElementsByTagName("LABEL");
 							for (int p = 0; p < nListL.getLength(); p++) {
@@ -166,7 +164,7 @@ public class Automaton {
 										cS.addAll(alph.getSubAlphabet(label));
 										// System.out.println("SubRec");
 									} else {
-										cS.add(label.charAt(0));
+										cS.add(new AlphabetItem(label));
 									}
 								}
 							}
@@ -219,7 +217,7 @@ public class Automaton {
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
-		System.out.println(a.processWord("H3"));
+		System.out.println(a.processWord("HHHH3"));
 	}
 
 }
