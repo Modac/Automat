@@ -28,7 +28,7 @@ public class Alphabet {
 		this(alphabetItems, new HashMap<>());
 	}
 
-	public Alphabet(String[] alphabetItems) {
+	public Alphabet(String... alphabetItems) {
 		this(alphabetItems, new HashMap<>());
 	}
 

@@ -88,6 +88,7 @@ public class Automaton {
 		char[] c = word.toCharArray();
 		curStateLabel = startStateLabel;
 		for (char d : c) {
+			System.out.println(d);
 			State curState = findState(curStateLabel);
 			String nextState = curState.getNextStateFor(new AlphabetItem(d));
 			if (nextState == null)
@@ -124,7 +125,7 @@ public class Automaton {
 
 			Element automaton = doc.getDocumentElement();
 			if (!automaton.getTagName().toLowerCase().equals("automaton"))
-				throw new RuntimeException("No valid xml: root element ist AUTOMATRON");
+				throw new RuntimeException("No valid xml: root element isn't AUTOMATRON");
 			if (!automaton.getElementsByTagName("TYPE").item(0).getAttributes().getNamedItem("value").getNodeValue()
 					.equals("DEA"))
 				throw new RuntimeException("Only DEAs supported yet.");
@@ -161,6 +162,9 @@ public class Automaton {
 									String label = eL.getAttribute("read");
 									// System.out.println(label);
 									if (alph.containsSubRange(label)) {
+										if (alph.containsAlphabetItem(label))
+											throw new RuntimeException(
+													"AlphabetItem: " + label + "is also a subRange.");
 										cS.addAll(alph.getSubAlphabet(label));
 										// System.out.println("SubRec");
 									} else {
@@ -217,7 +221,8 @@ public class Automaton {
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
-		System.out.println(a.processWord("HHHH3"));
+		// System.out.println(a.getAlphabetItems());
+		System.out.println(a.processWord("H-_-H3"));
 	}
 
 }
