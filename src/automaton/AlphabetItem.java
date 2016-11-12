@@ -1,6 +1,6 @@
 package automaton;
 
-public class AlphabetItem {
+public class AlphabetItem implements AlphabetElement {
 
 	String item;
 
@@ -30,5 +30,10 @@ public class AlphabetItem {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isSingle() {
+		return true;
 	}
 }
