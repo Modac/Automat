@@ -1,4 +1,4 @@
-package Automaton;
+package automaton;
 @FunctionalInterface
 public interface StateChangeListener {
 

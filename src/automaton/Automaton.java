@@ -1,4 +1,4 @@
-package Automaton;
+package automaton;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,8 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import Automaton.Alphabet.Range;
 
 public class Automaton {
 
@@ -90,8 +88,9 @@ public class Automaton {
 		char[] c = word.toCharArray();
 		curStateLabel = startStateLabel;
 		for (char d : c) {
+			System.out.println(d);
 			State curState = findState(curStateLabel);
-			String nextState = curState.getNextStateFor(d);
+			String nextState = curState.getNextStateFor(new AlphabetItem(d));
 			if (nextState == null)
 				return false; // throw new RuntimeException("the dea isn't
 								// complete"); Just assuming it should end in a
@@ -126,16 +125,16 @@ public class Automaton {
 
 			Element automaton = doc.getDocumentElement();
 			if (!automaton.getTagName().toLowerCase().equals("automaton"))
-				throw new RuntimeException("No valid xml: root element ist AUTOMATRON");
+				throw new RuntimeException("No valid xml: root element isn't AUTOMATRON");
 			if (!automaton.getElementsByTagName("TYPE").item(0).getAttributes().getNamedItem("value").getNodeValue()
 					.equals("DEA"))
 				throw new RuntimeException("Only DEAs supported yet.");
 
 			// TODO: alphabet
-			Alphabet alph = new Alphabet(Alphabet.getArabicNumerals());
-			alph.addAlphabetItems(Alphabet.getUpperLatinAlphabet());
-			alph.addSubRange("0-9", new Range(alph.indexOf('0'), alph.indexOf('9')));
-			alph.addSubRange("A-Z", new Range(alph.indexOf('A'), alph.indexOf('Z')));
+			Alphabet alph = new Alphabet(Alphabet.getArabicNumeralsA());
+			alph.addStringItems(Alphabet.getUpperLatinAlphabet());
+			alph.addSubRange("0-9", new Range(alph.indexOf("0"), alph.indexOf("9")));
+			alph.addSubRange("A-Z", new Range(alph.indexOf("A"), alph.indexOf("Z")));
 
 			NodeList nList = automaton.getElementsByTagName("STATE");
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -152,7 +151,7 @@ public class Automaton {
 							Element eT = (Element) nT;
 
 							String nextState = eT.getAttribute("target");
-							List<Character> cS = new ArrayList<>();
+							List<AlphabetItem> cS = new ArrayList<>();
 
 							NodeList nListL = eT.getElementsByTagName("LABEL");
 							for (int p = 0; p < nListL.getLength(); p++) {
@@ -163,10 +162,13 @@ public class Automaton {
 									String label = eL.getAttribute("read");
 									// System.out.println(label);
 									if (alph.containsSubRange(label)) {
+										if (alph.containsAlphabetItem(label))
+											throw new RuntimeException(
+													"AlphabetItem: " + label + "is also a subRange.");
 										cS.addAll(alph.getSubAlphabet(label));
 										// System.out.println("SubRec");
 									} else {
-										cS.add(label.charAt(0));
+										cS.add(new AlphabetItem(label));
 									}
 								}
 							}
@@ -219,7 +221,8 @@ public class Automaton {
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
-		System.out.println(a.processWord("H3"));
+		// System.out.println(a.getAlphabetItems());
+		System.out.println(a.processWord("H-_-H3"));
 	}
 
 }
