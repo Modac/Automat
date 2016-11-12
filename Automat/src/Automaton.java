@@ -1,4 +1,5 @@
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -30,6 +31,10 @@ public class Automaton {
 
 	public Alphabet getAlphabet() {
 		return alphabet;
+	}
+
+	public void setAlphabet(Alphabet alphabet) {
+		this.alphabet = alphabet;
 	}
 
 	public void addState(State state) {
@@ -90,6 +95,28 @@ public class Automaton {
 				return next;
 		}
 		return null;
+	}
+
+	public static void main(String[] args) {
+		Automaton a = new Automaton();
+
+		Alphabet alph = new Alphabet(Arrays.asList('a', 'b'));
+		a.setAlphabet(alph);
+
+		State s1 = new State("s1");
+		s1.addTransition("s2", Arrays.asList('a'));
+		a.addState(s1);
+
+		State s2 = new State("s2");
+		s2.addTransition("s1", Arrays.asList('b'));
+		a.addState(s2);
+
+		a.addEndState("s2");
+		a.setStartState("s1");
+
+		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
+
+		System.out.println(a.processWord("abababab"));
 	}
 
 }
