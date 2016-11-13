@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -90,6 +91,7 @@ public class Automaton {
 		for (char d : c) {
 			System.out.println(d);
 			State curState = findState(curStateLabel);
+			curState.getTransitions().forEach((s, l) -> System.out.println(s + Arrays.toString(l.toArray())));
 			String nextState = curState.getNextStateFor(new AlphabetItem(d));
 			if (nextState == null)
 				return false; // throw new RuntimeException("the dea isn't

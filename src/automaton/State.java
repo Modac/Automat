@@ -47,6 +47,10 @@ public class State implements Comparable<State> {
 		return null;
 	}
 
+	public Map<String, List<AlphabetItem>> getTransitions() {
+		return transitions;
+	}
+
 	@Override
 	public int compareTo(State o) {
 		return label.compareTo(o.getLabel());

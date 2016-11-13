@@ -31,4 +31,9 @@ public class AlphabetItem {
 
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return item;
+	}
 }
