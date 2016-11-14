@@ -5,7 +5,9 @@
         <ITEM value="AB"/>
         <ITEM value="ABCD"/>
         <ITEM value="CD"/>
+        <ITEM value="CDEF"/>
         <ITEM value="EF"/>
+        <ITEM value="EFGH"/>
         <ITEM value="GH"/>
     </ALPHABET>
     <STATE name="q_0" finalstate="false">
@@ -17,7 +19,9 @@
         </TRANSITION>
         <TRANSITION target="Trap">
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
@@ -28,7 +32,9 @@
         <TRANSITION target="Trap">
             <LABEL read="AB"/>
             <LABEL read="ABCD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
@@ -39,21 +45,27 @@
         <TRANSITION target="q_5">
             <LABEL read="AB"/>
         </TRANSITION>
+        <TRANSITION target="q_4">
+            <LABEL read="EFGH"/>
+        </TRANSITION>
         <TRANSITION target="Trap">
             <LABEL read="ABCD"/>
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
     <STATE name="q_3" finalstate="false">
-        <TRANSITION target="q_4">
+        <TRANSITION target="q_7">
             <LABEL read="GH"/>
         </TRANSITION>
         <TRANSITION target="Trap">
             <LABEL read="AB"/>
             <LABEL read="ABCD"/>
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
         </TRANSITION>
     </STATE>
     <STATE name="q_4" finalstate="false">
@@ -63,7 +75,9 @@
         <TRANSITION target="Trap">
             <LABEL read="ABCD"/>
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
@@ -72,7 +86,22 @@
             <LABEL read="AB"/>
             <LABEL read="ABCD"/>
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
+            <LABEL read="GH"/>
+        </TRANSITION>
+    </STATE>
+    <STATE name="q_7" finalstate="false">
+        <TRANSITION target="q_4">
+            <LABEL read="ABCD"/>
+        </TRANSITION>
+        <TRANSITION target="Trap">
+            <LABEL read="AB"/>
+            <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
+            <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
@@ -81,7 +110,9 @@
             <LABEL read="AB"/>
             <LABEL read="ABCD"/>
             <LABEL read="CD"/>
+            <LABEL read="CDEF"/>
             <LABEL read="EF"/>
+            <LABEL read="EFGH"/>
             <LABEL read="GH"/>
         </TRANSITION>
     </STATE>
@@ -97,7 +128,13 @@
                 <LABELLAYOUT read="CD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -117,7 +154,13 @@
                 <LABELLAYOUT read="ABCD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -126,16 +169,20 @@
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <STATELAYOUT name="q_2">
-            <LEFT value="200"/>
-            <TOP value="200"/>
+            <LEFT value="100"/>
+            <TOP value="205"/>
             <TRANSITIONLAYOUT target="q_3" drawvertical="false"/>
             <TRANSITIONLAYOUT target="q_5" drawvertical="false"/>
+            <TRANSITIONLAYOUT target="q_4" drawvertical="false"/>
             <TRANSITIONLAYOUT target="Trap" drawvertical="false">
                 <PENCOLOR value="$C0C0C0"/>
                 <LABELLAYOUT read="ABCD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="CD">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -144,9 +191,9 @@
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <STATELAYOUT name="q_3">
-            <LEFT value="100"/>
-            <TOP value="200"/>
-            <TRANSITIONLAYOUT target="q_4" drawvertical="false"/>
+            <LEFT value="200"/>
+            <TOP value="205"/>
+            <TRANSITIONLAYOUT target="q_7" drawvertical="false"/>
             <TRANSITIONLAYOUT target="Trap" drawvertical="false">
                 <PENCOLOR value="$C0C0C0"/>
                 <LABELLAYOUT read="AB">
@@ -158,14 +205,20 @@
                 <LABELLAYOUT read="CD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <STATELAYOUT name="q_4">
-            <LEFT value="100"/>
-            <TOP value="307"/>
+            <LEFT value="200"/>
+            <TOP value="299"/>
             <TRANSITIONLAYOUT target="q_5" drawvertical="false"/>
             <TRANSITIONLAYOUT target="Trap" drawvertical="false">
                 <PENCOLOR value="$C0C0C0"/>
@@ -175,7 +228,13 @@
                 <LABELLAYOUT read="CD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -184,8 +243,8 @@
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <STATELAYOUT name="q_5">
-            <LEFT value="200"/>
-            <TOP value="318"/>
+            <LEFT value="100"/>
+            <TOP value="299"/>
             <TRANSITIONLAYOUT target="Trap" drawvertical="false">
                 <PENCOLOR value="$C0C0C0"/>
                 <LABELLAYOUT read="AB">
@@ -197,7 +256,39 @@
                 <LABELLAYOUT read="CD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="GH">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+            </TRANSITIONLAYOUT>
+        </STATELAYOUT>
+        <STATELAYOUT name="q_7">
+            <LEFT value="360"/>
+            <TOP value="227"/>
+            <TRANSITIONLAYOUT target="q_4" drawvertical="false"/>
+            <TRANSITIONLAYOUT target="Trap" drawvertical="false">
+                <PENCOLOR value="$C0C0C0"/>
+                <LABELLAYOUT read="AB">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="CD">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -206,8 +297,8 @@
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <STATELAYOUT name="Trap">
-            <LEFT value="599"/>
-            <TOP value="230"/>
+            <LEFT value="520"/>
+            <TOP value="67"/>
             <COLOR value="$EEEEEE"/>
             <PENCOLOR value="$C0C0C0"/>
             <FONTCOLOR value="$666666"/>
@@ -224,7 +315,13 @@
                 <LABELLAYOUT read="CD">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
+                <LABELLAYOUT read="CDEF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
                 <LABELLAYOUT read="EF">
+                    <FONTCOLOR value="$666666"/>
+                </LABELLAYOUT>
+                <LABELLAYOUT read="EFGH">
                     <FONTCOLOR value="$666666"/>
                 </LABELLAYOUT>
                 <LABELLAYOUT read="GH">
@@ -233,7 +330,7 @@
             </TRANSITIONLAYOUT>
         </STATELAYOUT>
         <NOTEPAD>
-            {\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            {\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\lang1031\fs20 
 \par }
 

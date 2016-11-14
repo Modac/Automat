@@ -225,14 +225,14 @@ public class Automaton {
 		 * 
 		 * System.out.println(a.processWord("abababab"));
 		 */
-		System.out.println(System.getProperty("user.dir"));
-		Automaton a = Automaton.parseFromXml(new File("..\\example\\xml\\textDEA3.xml"));
-
+		// System.out.println(System.getProperty("user.dir"));
+		Automaton a = parseFromXml(new File("example\\xml\\testDEA3.xml"));
+		// parseFromXml(new
+		// ByteArrayInputStream(TESTXML3.getBytes(StandardCharsets.UTF_8)));
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
 		// System.out.println(a.getAlphabetItems());
 		// System.out.println(a.processWord("H-_-H3"));
-		System.out.println(a.processWord("ABCDEFAB"));
+		System.out.println(a.processWord("ABCDEFGHABCDAB"));
 	}
-
 }
