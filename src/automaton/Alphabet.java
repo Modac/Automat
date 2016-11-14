@@ -37,7 +37,7 @@ public class Alphabet {
 	}
 
 	public void addAlphabetItem(AlphabetItem alphabetItem) {
-		if (!containsAlphabetItem(alphabetItem))
+		if (!(containsAlphabetItem(alphabetItem) || containsSubRange(alphabetItem.getItem())))
 			alphabetItems.add(alphabetItem);
 	}
 
@@ -80,7 +80,8 @@ public class Alphabet {
 	public void addSubRange(String label, Range range) {
 		if (!range.withinBounds(alphabetItems.size() - 1))
 			throw new InvalidParameterException("endIndex of range exceeds alphabetItems");
-		subRanges.put(label, range);
+		if (!containsAlphabetItem(label))
+			subRanges.put(label, range);
 	}
 
 	private void addSubRanges(Map<String, Range> subRanges) {
@@ -93,6 +94,10 @@ public class Alphabet {
 
 	public Range getSubRange(String label) {
 		return subRanges.get(label);
+	}
+
+	public Map<String, Range> getSubRanges() {
+		return subRanges;
 	}
 
 	public List<AlphabetItem> getSubAlphabet(String rangeLabel) {

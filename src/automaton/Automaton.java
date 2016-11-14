@@ -119,11 +119,11 @@ public class Automaton {
 		return null;
 	}
 
-	public static Automaton parseFromXml(File file) throws FileNotFoundException {
-		return parseFromXml(new FileInputStream(file));
+	public static Automaton parseFromXml(File file, Alphabet preAlphabet) throws FileNotFoundException {
+		return parseFromXml(new FileInputStream(file), preAlphabet);
 	}
 
-	public static Automaton parseFromXml(InputStream is) {
+	public static Automaton parseFromXml(InputStream is, Alphabet preAlphabet) {
 		Automaton au = new Automaton();
 
 		try {
@@ -139,11 +139,22 @@ public class Automaton {
 					.equals("DEA"))
 				throw new RuntimeException("Only DEAs supported yet.");
 
-			// TODO: alphabet
-			Alphabet alph = new Alphabet(Alphabet.getArabicNumeralsA());
-			alph.addStringItems(Alphabet.getUpperLatinAlphabet());
-			alph.addSubRange("0-9", new Range(alph.indexOf("0"), alph.indexOf("9")));
-			alph.addSubRange("A-Z", new Range(alph.indexOf("A"), alph.indexOf("Z")));
+			Alphabet alph = preAlphabet == null ? new Alphabet() : preAlphabet;
+
+			Node alphabet = automaton.getElementsByTagName("ALPHABET").item(0);
+			if (alphabet.getNodeType() == Element.ELEMENT_NODE) {
+				NodeList itemList = ((Element) alphabet).getElementsByTagName("ITEM");
+				for (int i = 0; i < itemList.getLength(); i++) {
+					Node n = itemList.item(i);
+					if (n.getNodeType() == Element.ELEMENT_NODE) {
+						Element e = (Element) n;
+						alph.addAlphabetItem(e.getAttribute("value"));
+					}
+				}
+			}
+
+			System.out.println(alph.getAlphabetItems());
+			System.out.println(alph.getSubRanges().keySet());
 
 			NodeList nList = automaton.getElementsByTagName("STATE");
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -173,7 +184,7 @@ public class Automaton {
 									if (alph.containsSubRange(label)) {
 										if (alph.containsAlphabetItem(label))
 											throw new RuntimeException(
-													"AlphabetItem: " + label + "is also a subRange.");
+													"AlphabetItem: " + label + " is also a subRange.");
 										cS.addAll(alph.getSubAlphabet(label));
 										// System.out.println("SubRec");
 									} else {
@@ -226,13 +237,20 @@ public class Automaton {
 		 * System.out.println(a.processWord("abababab"));
 		 */
 		// System.out.println(System.getProperty("user.dir"));
-		Automaton a = parseFromXml(new File("example\\xml\\testDEA3.xml"));
+
+		Alphabet alph = new Alphabet(Alphabet.getArabicNumeralsA());
+		alph.addStringItems(Alphabet.getUpperLatinAlphabet());
+		alph.addSubRange("0-9", new Range(alph.indexOf("0"), alph.indexOf("9")));
+		alph.addSubRange("A-Z", new Range(alph.indexOf("A"), alph.indexOf("Z")));
+
+		Automaton a = parseFromXml(new File("example\\xml\\testDEA2.xml"), alph);
 		// parseFromXml(new
 		// ByteArrayInputStream(TESTXML3.getBytes(StandardCharsets.UTF_8)));
+
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
 		// System.out.println(a.getAlphabetItems());
-		// System.out.println(a.processWord("H-_-H3"));
-		System.out.println(a.processWord("ABCDEFGHABCDAB"));
+		System.out.println(a.processWord("HD-_-H3"));
+		// System.out.println(a.processWord("ABCDEFGHABCDAB"));
 	}
 }
