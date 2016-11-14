@@ -153,8 +153,8 @@ public class Automaton {
 				}
 			}
 
-			System.out.println(alph.getAlphabetItems());
-			System.out.println(alph.getSubRanges().keySet());
+			// System.out.println(alph.getAlphabetItems());
+			// System.out.println(alph.getSubRanges().keySet());
 
 			NodeList nList = automaton.getElementsByTagName("STATE");
 			for (int i = 0; i < nList.getLength(); i++) {
