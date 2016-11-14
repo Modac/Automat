@@ -1,7 +1,8 @@
 package automaton;
+
 @FunctionalInterface
 public interface StateChangeListener {
 
-	public void onStateChange(String prevStateLabel, Character transitionChar, String newStateLabel);
+	public void onStateChange(String prevStateLabel, AlphabetItem alphabetItem, String newStateLabel);
 
 }
