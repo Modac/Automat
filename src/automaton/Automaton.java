@@ -5,10 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -88,18 +89,18 @@ public class Automaton {
 
 		char[] c = word.toCharArray();
 		curStateLabel = startStateLabel;
-		for (char d : c) {
-			System.out.println(d);
+		while (word.length() > 0) {
 			State curState = findState(curStateLabel);
-			curState.getTransitions().forEach((s, l) -> System.out.println(s + Arrays.toString(l.toArray())));
-			String nextState = curState.getNextStateFor(new AlphabetItem(d));
-			if (nextState == null)
+			Optional<Entry<String, AlphabetItem>> res = curState.getNextStateFor(word);
+			if (!res.isPresent())
 				return false; // throw new RuntimeException("the dea isn't
 								// complete"); Just assuming it should end in a
 								// Trap
+			String nextState = res.get().getKey();
 			curStateLabel = nextState;
+			word = word.substring(res.get().getValue().getLength());
 			for (StateChangeListener list : listeners) {
-				list.onStateChange(curState.getLabel(), d, curStateLabel);
+				list.onStateChange(curState.getLabel(), res.get().getValue(), curStateLabel);
 			}
 		}
 		if (endStateLabels.contains(curStateLabel))
@@ -219,12 +220,13 @@ public class Automaton {
 		 * System.out.println(a.processWord("abababab"));
 		 */
 
-		Automaton a = Automaton.parseFromXml(new File("C:\\Users\\Laptop\\Documents\\testDEA2.xml"));
+		Automaton a = Automaton.parseFromXml(new File("C:\\Users\\Laptop\\Documents\\testDEA3.xml"));
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
 		// System.out.println(a.getAlphabetItems());
-		System.out.println(a.processWord("H-_-H3"));
+		// System.out.println(a.processWord("H-_-H3"));
+		System.out.println(a.processWord("ABCDEFAB"));
 	}
 
 }

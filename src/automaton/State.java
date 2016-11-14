@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 public class State implements Comparable<State> {
 	private String label;
@@ -45,6 +46,19 @@ public class State implements Comparable<State> {
 				return entry.getKey();
 		}
 		return null;
+	}
+
+	public Optional<Map.Entry<String, AlphabetItem>> getNextStateFor(String word) {
+		for (Entry<String, List<AlphabetItem>> entry : transitions.entrySet()) {
+			for (AlphabetItem a : entry.getValue()) {
+				if (word.startsWith(a.getItem())) {
+					Map<String, AlphabetItem> mapT = new HashMap<>();
+					mapT.put(entry.getKey(), a);
+					return Optional.of(mapT.entrySet().iterator().next());
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	public Map<String, List<AlphabetItem>> getTransitions() {
