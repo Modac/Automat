@@ -205,7 +205,7 @@ public class Automaton {
 		return au;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		/*
 		 * Automaton a = new Automaton();
 		 * 
@@ -225,8 +225,8 @@ public class Automaton {
 		 * 
 		 * System.out.println(a.processWord("abababab"));
 		 */
-
-		Automaton a = Automaton.parseFromXml(new File("C:\\Users\\Laptop\\Documents\\testDEA3.xml"));
+		System.out.println(System.getProperty("user.dir"));
+		Automaton a = Automaton.parseFromXml(new File("..\\example\\xml\\textDEA3.xml"));
 
 		a.registerListener((prev, c, now) -> System.out.println(prev + " -> " + c + " -> " + now));
 
