@@ -2,7 +2,9 @@ package automaton;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -117,14 +119,18 @@ public class Automaton {
 		return null;
 	}
 
-	public static Automaton parseFromXml(File file) {
+	public static Automaton parseFromXml(File file) throws FileNotFoundException {
+		return parseFromXml(new FileInputStream(file));
+	}
+
+	public static Automaton parseFromXml(InputStream is) {
 		Automaton au = new Automaton();
 
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			Document doc = builder.parse(new FileInputStream(file));
+			Document doc = builder.parse(is);
 
 			Element automaton = doc.getDocumentElement();
 			if (!automaton.getTagName().toLowerCase().equals("automaton"))
@@ -199,7 +205,7 @@ public class Automaton {
 		return au;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		/*
 		 * Automaton a = new Automaton();
 		 * 
